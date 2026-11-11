@@ -1,0 +1,949 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Трекер навчання API",
+    "description": "\nREST API трекера навчання. Зберігає предмети й сесії навчання в базі PostgreSQL\nі віддає підсумки за останні 7 днів.\n\n* **Предмети** містять назву й тижневу ціль у хвилинах.\n* **Сесії навчання** належать предмету: тривалість, дата й коротка нотатка.\n* **Статистика** рахує час за тиждень, серію днів поспіль і прогрес по предметах.\n\nДані передаються у форматі JSON. Помилки мають поле `detail` з поясненням.\n",
+    "version": "0.3.0"
+  },
+  "paths": {
+    "/api/subjects": {
+      "get": {
+        "tags": [
+          "Предмети"
+        ],
+        "summary": "Список предметів",
+        "description": "Повертає всі предмети в порядку створення.",
+        "operationId": "list_subjects_api_subjects_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Subjects Api Subjects Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Предмети"
+        ],
+        "summary": "Створити предмет",
+        "operationId": "create_subject_api_subjects_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/subjects/{subject_id}": {
+      "get": {
+        "tags": [
+          "Предмети"
+        ],
+        "summary": "Отримати предмет",
+        "operationId": "read_subject_api_subjects__subject_id__get",
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Subject Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Предмет не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Предмети"
+        ],
+        "summary": "Оновити предмет",
+        "description": "Замінює назву й тижневу ціль предмета.",
+        "operationId": "update_subject_api_subjects__subject_id__put",
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Subject Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Предмет не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Предмети"
+        ],
+        "summary": "Видалити предмет",
+        "description": "Видаляє предмет разом з усіма його сесіями навчання.",
+        "operationId": "delete_subject_api_subjects__subject_id__delete",
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Subject Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Предмет не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions": {
+      "get": {
+        "tags": [
+          "Сесії навчання"
+        ],
+        "summary": "Список сесій",
+        "description": "Повертає сесії від найновіших до найстаріших. Фільтри необов'язкові.",
+        "operationId": "list_sessions_api_sessions_get",
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Лише сесії цього предмета",
+              "title": "Subject Id"
+            },
+            "description": "Лише сесії цього предмета"
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Від цієї дати включно",
+              "title": "Date From"
+            },
+            "description": "Від цієї дати включно"
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "До цієї дати включно",
+              "title": "Date To"
+            },
+            "description": "До цієї дати включно"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "description": "Скільки записів повернути",
+              "default": 100,
+              "title": "Limit"
+            },
+            "description": "Скільки записів повернути"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Скільки записів пропустити",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Скільки записів пропустити"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SessionOut"
+                  },
+                  "title": "Response List Sessions Api Sessions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Сесії навчання"
+        ],
+        "summary": "Додати сесію",
+        "operationId": "create_session_api_sessions_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Сесію або предмет не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/{session_id}": {
+      "get": {
+        "tags": [
+          "Сесії навчання"
+        ],
+        "summary": "Отримати сесію",
+        "operationId": "read_session_api_sessions__session_id__get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Сесію або предмет не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Сесії навчання"
+        ],
+        "summary": "Оновити сесію",
+        "operationId": "update_session_api_sessions__session_id__put",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Сесію або предмет не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Сесії навчання"
+        ],
+        "summary": "Видалити сесію",
+        "operationId": "delete_session_api_sessions__session_id__delete",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Сесію або предмет не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stats/week": {
+      "get": {
+        "tags": [
+          "Статистика"
+        ],
+        "summary": "Підсумки за останні 7 днів",
+        "description": "Загальний час, серія днів поспіль, хвилини за днями та прогрес по предметах.",
+        "operationId": "week_stats_api_stats_week_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeekStats"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "tags": [
+          "Службові"
+        ],
+        "summary": "Стан сервера й бази даних",
+        "description": "Повертає 200, якщо сервер працює й база відповідає, і 503, якщо бази немає.",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DayStat": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "minutes": {
+            "type": "integer",
+            "title": "Minutes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "minutes"
+        ],
+        "title": "DayStat"
+      },
+      "ErrorOut": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "examples": [
+              "Предмет не знайдено"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "ErrorOut"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "SessionIn": {
+        "properties": {
+          "subject_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Subject Id",
+            "description": "Ідентифікатор предмета"
+          },
+          "minutes": {
+            "type": "integer",
+            "maximum": 720.0,
+            "minimum": 1.0,
+            "title": "Minutes",
+            "description": "Тривалість у хвилинах"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note",
+            "description": "Що вивчили, за бажанням"
+          },
+          "studied_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Studied On",
+            "description": "Дата заняття, за замовчуванням сьогодні"
+          }
+        },
+        "type": "object",
+        "required": [
+          "subject_id",
+          "minutes"
+        ],
+        "title": "SessionIn",
+        "examples": [
+          {
+            "minutes": 45,
+            "note": "Цикли та функції",
+            "studied_on": "2026-11-06",
+            "subject_id": 1
+          }
+        ]
+      },
+      "SessionOut": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "subject_id": {
+            "type": "integer",
+            "title": "Subject Id"
+          },
+          "minutes": {
+            "type": "integer",
+            "title": "Minutes"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "studied_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Studied On"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "subject_id",
+          "minutes",
+          "studied_on"
+        ],
+        "title": "SessionOut",
+        "examples": [
+          {
+            "id": 12,
+            "minutes": 45,
+            "note": "Цикли та функції",
+            "studied_on": "2026-11-06",
+            "subject_id": 1
+          }
+        ]
+      },
+      "SubjectIn": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Назва предмета"
+          },
+          "goal_minutes": {
+            "type": "integer",
+            "maximum": 6000.0,
+            "minimum": 10.0,
+            "title": "Goal Minutes",
+            "description": "Тижнева ціль у хвилинах"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "goal_minutes"
+        ],
+        "title": "SubjectIn",
+        "examples": [
+          {
+            "goal_minutes": 120,
+            "name": "Tableau"
+          }
+        ]
+      },
+      "SubjectOut": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Назва предмета"
+          },
+          "goal_minutes": {
+            "type": "integer",
+            "maximum": 6000.0,
+            "minimum": 10.0,
+            "title": "Goal Minutes",
+            "description": "Тижнева ціль у хвилинах"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "examples": [
+              1
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "goal_minutes",
+          "id"
+        ],
+        "title": "SubjectOut",
+        "examples": [
+          {
+            "goal_minutes": 120,
+            "id": 5,
+            "name": "Tableau"
+          }
+        ]
+      },
+      "SubjectStat": {
+        "properties": {
+          "subject_id": {
+            "type": "integer",
+            "title": "Subject Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "goal_minutes": {
+            "type": "integer",
+            "title": "Goal Minutes"
+          },
+          "minutes": {
+            "type": "integer",
+            "title": "Minutes"
+          },
+          "goal_reached": {
+            "type": "boolean",
+            "title": "Goal Reached"
+          }
+        },
+        "type": "object",
+        "required": [
+          "subject_id",
+          "name",
+          "goal_minutes",
+          "minutes",
+          "goal_reached"
+        ],
+        "title": "SubjectStat"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WeekStats": {
+        "properties": {
+          "total_minutes": {
+            "type": "integer",
+            "title": "Total Minutes",
+            "description": "Скільки хвилин навчання за останні 7 днів"
+          },
+          "streak_days": {
+            "type": "integer",
+            "title": "Streak Days",
+            "description": "Скільки днів поспіль були заняття"
+          },
+          "per_day": {
+            "items": {
+              "$ref": "#/components/schemas/DayStat"
+            },
+            "type": "array",
+            "title": "Per Day",
+            "description": "Хвилини за днями, від найстарішого до сьогодні"
+          },
+          "per_subject": {
+            "items": {
+              "$ref": "#/components/schemas/SubjectStat"
+            },
+            "type": "array",
+            "title": "Per Subject",
+            "description": "Прогрес по кожному предмету"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_minutes",
+          "streak_days",
+          "per_day",
+          "per_subject"
+        ],
+        "title": "WeekStats"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Предмети",
+      "description": "Створення, перегляд, зміна й видалення предметів"
+    },
+    {
+      "name": "Сесії навчання",
+      "description": "Записи про заняття: коли, скільки й що вивчили"
+    },
+    {
+      "name": "Статистика",
+      "description": "Підсумки за тиждень"
+    },
+    {
+      "name": "Службові",
+      "description": "Перевірка роботи сервера"
+    }
+  ]
+}

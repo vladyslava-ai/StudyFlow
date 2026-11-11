@@ -1,0 +1,561 @@
+{
+  "info": {
+    "_postman_id": "8586f352-6332-5ade-8fe3-0b80ba597971",
+    "name": "Трекер навчання API",
+    "description": "Колекція запитів до REST API трекера навчання (лабораторна №3). Запити виконуються по порядку й перевіряють відповіді автотестами: Collection Runner покаже, скільки пройшло.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Перевірка сервера",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 200', () => pm.response.to.have.status(200));",
+              "pm.test('База відповідає', () => pm.expect(pm.response.json().database).to.eql('ok'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        },
+        "description": "Сервер працює й база даних доступна."
+      }
+    },
+    {
+      "name": "2. Створити предмет",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 201 Created', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.test('Є id, назва й ціль', () => {",
+              "  pm.expect(body.id).to.be.a('number');",
+              "  pm.expect(body.name).to.eql('Postman тест');",
+              "  pm.expect(body.goal_minutes).to.eql(120);",
+              "});",
+              "pm.collectionVariables.set('subjectId', body.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/subjects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "subjects"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman тест\",\n  \"goal_minutes\": 120\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Створює предмет. Його id зберігається в змінній subjectId для наступних запитів."
+      }
+    },
+    {
+      "name": "3. Список предметів",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 200', () => pm.response.to.have.status(200));",
+              "pm.test('Масив містить створений предмет', () => {",
+              "  const id = Number(pm.collectionVariables.get('subjectId'));",
+              "  pm.expect(pm.response.json().some(s => s.id === id)).to.be.true;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/subjects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "subjects"
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Отримати предмет за id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 200', () => pm.response.to.have.status(200));",
+              "pm.test('Назва збігається', () => pm.expect(pm.response.json().name).to.eql('Postman тест'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/subjects/{{subjectId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "subjects",
+            "{{subjectId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. Оновити предмет",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 200', () => pm.response.to.have.status(200));",
+              "pm.test('Дані оновлено', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.name).to.eql('Postman тест (оновлено)');",
+              "  pm.expect(body.goal_minutes).to.eql(180);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/subjects/{{subjectId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "subjects",
+            "{{subjectId}}"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman тест (оновлено)\",\n  \"goal_minutes\": 180\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "6. Додати сесію",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 201 Created', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.test('Сесія належить предмету', () => {",
+              "  pm.expect(body.subject_id).to.eql(Number(pm.collectionVariables.get('subjectId')));",
+              "  pm.expect(body.minutes).to.eql(45);",
+              "  pm.expect(body.studied_on).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+              "});",
+              "pm.collectionVariables.set('sessionId', body.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/sessions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sessions"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subject_id\": {{subjectId}},\n  \"minutes\": 45,\n  \"note\": \"Перший запит у Postman\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Дату можна не вказувати, тоді береться сьогодні."
+      }
+    },
+    {
+      "name": "7. Сесії предмета (фільтр)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 200', () => pm.response.to.have.status(200));",
+              "pm.test('Усі сесії належать вибраному предмету', () => {",
+              "  const list = pm.response.json();",
+              "  pm.expect(list.length).to.be.above(0);",
+              "  list.forEach(s => pm.expect(s.subject_id).to.eql(Number(pm.collectionVariables.get('subjectId'))));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/sessions?subject_id={{subjectId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sessions"
+          ],
+          "query": [
+            {
+              "key": "subject_id",
+              "value": "{{subjectId}}"
+            }
+          ]
+        },
+        "description": "Параметри запиту: subject_id, date_from, date_to, limit, offset."
+      }
+    },
+    {
+      "name": "8. Оновити сесію",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 200', () => pm.response.to.have.status(200));",
+              "pm.test('Тривалість змінено', () => pm.expect(pm.response.json().minutes).to.eql(60));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/sessions/{{sessionId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sessions",
+            "{{sessionId}}"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subject_id\": {{subjectId}},\n  \"minutes\": 60,\n  \"note\": \"Оновлена нотатка\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "9. Статистика за тиждень",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 200', () => pm.response.to.have.status(200));",
+              "pm.test('Є 7 днів і підсумки', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.per_day).to.have.lengthOf(7);",
+              "  pm.expect(body.total_minutes).to.be.at.least(60);",
+              "  pm.expect(body.streak_days).to.be.at.least(1);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/stats/week",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "stats",
+            "week"
+          ]
+        }
+      }
+    },
+    {
+      "name": "10. Помилка: порожня назва (422)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 422 Unprocessable Entity', () => pm.response.to.have.status(422));",
+              "pm.test('Відповідь описує помилку', () => pm.expect(pm.response.json().detail).to.be.an('array'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/subjects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "subjects"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"goal_minutes\": 120\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Перевірка даних: порожня назва не приймається."
+      }
+    },
+    {
+      "name": "11. Помилка: сесія неіснуючого предмета (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 404 Not Found', () => pm.response.to.have.status(404));",
+              "pm.test('Повідомлення зрозуміле', () => pm.expect(pm.response.json().detail).to.eql('Предмет не знайдено'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/sessions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sessions"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subject_id\": 999999999,\n  \"minutes\": 30\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "12. Видалити сесію",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 204 No Content', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/sessions/{{sessionId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sessions",
+            "{{sessionId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "13. Видалити предмет",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 204 No Content', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/subjects/{{subjectId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "subjects",
+            "{{subjectId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "14. Помилка: видалений предмет (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Статус 404 Not Found', () => pm.response.to.have.status(404));",
+              "pm.test('Предмета більше немає', () => pm.expect(pm.response.json().detail).to.eql('Предмет не знайдено'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/subjects/{{subjectId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "subjects",
+            "{{subjectId}}"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "subjectId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sessionId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
