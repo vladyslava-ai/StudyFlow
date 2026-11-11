@@ -1,11 +1,11 @@
-﻿FROM node:22-alpine AS frontend-build
+FROM node:22-alpine AS frontend-build
 
 WORKDIR /project/frontend
 
 COPY frontend/package*.json ./
 RUN npm ci
 
-COPY frontend/ ./
+COPY frontend/ ./`nRUN mkdir -p /project/backend/static
 RUN npm run build
 
 FROM python:3.12-slim
