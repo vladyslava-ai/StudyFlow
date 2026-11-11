@@ -1,0 +1,15 @@
+﻿.git
+.gitignore
+**/.env
+**/.env.*
+**/.session_key
+**/.venv
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+**/*.pyc
+frontend/dist
+backend/static
+backend/uploads
+**/*.db
+**/*.sqlite3
