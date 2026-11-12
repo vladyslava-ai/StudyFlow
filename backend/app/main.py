@@ -92,10 +92,10 @@ def health():
 # Монтується останнім, щоб не перекривати /api та /docs.
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 
+
 if STATIC_DIR.is_dir():
     app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="site")
 else:
-
     @app.get("/", include_in_schema=False)
     def root():
         return RedirectResponse(url="/docs")

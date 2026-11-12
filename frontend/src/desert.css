@@ -5,3 +5,1374 @@ body{background:var(--paper);font-family:var(--text);font-size:15px;line-height:
 :root[data-theme=dark] .sf-app .app-sidebar{background:#313B33;border-color:#485449}:root[data-theme=dark] .sf-app .app-logo,:root[data-theme=dark] .sf-app .app-nav a{color:#F0F2E9}:root[data-theme=dark] .sf-goal{background:#3C5141;color:#F4F0E9}:root[data-theme=dark] .sf-goal-row p,:root[data-theme=dark] .sf-goal-percent{color:#D6E3D1}:root[data-theme=dark] .sf-mini{background:#3E4851;color:#F4F0E9}:root[data-theme=dark] .sf-mini.sand{background:#51443C;color:#F4F0E9}:root[data-theme=dark] .sf-home-note{background:#51483B;color:#F4F0E9;border-color:#665747}
 @media(max-width:1050px){.sf-overview{grid-template-columns:1fr 1fr}.sf-goal{grid-column:span 2}.sf-home-grid{grid-template-columns:1fr}.sf-top-date{display:none}}
 @media(max-width:760px){.sf-app .app-content{margin-left:0;width:100%}.sf-welcome{align-items:start;flex-direction:column}.sf-overview{grid-template-columns:1fr 1fr}.sf-goal{grid-column:span 2}.sf-home-grid{grid-template-columns:1fr}.sf-profile{grid-template-columns:1fr}.sf-auth-wrap{grid-template-columns:1fr}.sf-auth-aside{padding:26px;min-height:250px}.sf-auth-aside h1{font-size:32px}.sf-auth-art{display:none}.sf-auth-aside small{display:none}.sf-auth-right{padding:50px 24px}.sf-top-title{display:none}.sf-top-right{gap:9px}.sf-user strong{display:none}}
+
+/* StudyFlow — improved text contrast */
+:root {
+  --ink: #253A33;
+  --muted: #52645A;
+}
+
+.sf-app .app-nav a {
+  color: #43584E;
+}
+
+.sf-app .app-nav-caption,
+.sf-eyebrow {
+  color: #526B58;
+}
+
+.sf-auth-form h2,
+.sf-auth-form label,
+.sf-auth-form input,
+.sf-page-heading h1 {
+  color: #253A33;
+}
+
+.sf-auth-form > p,
+.sf-switch {
+  color: #52645A;
+}
+
+.sf-auth-form input::placeholder {
+  color: #65756B;
+  opacity: 1;
+}
+
+.sf-auth-form input:focus {
+  outline: 2px solid #8BA58D;
+  outline-offset: 2px;
+}
+
+.sf-auth-form .sf-switch button {
+  color: #435F4F;
+}
+
+:root[data-theme="dark"] {
+  --ink: #F4F0E9;
+  --muted: #BCC6BA;
+}
+
+:root[data-theme="dark"] .sf-auth-form h2,
+:root[data-theme="dark"] .sf-auth-form label,
+:root[data-theme="dark"] .sf-auth-form input,
+:root[data-theme="dark"] .sf-page-heading h1 {
+  color: var(--ink);
+}
+
+/* StudyFlow — Tasks redesign */
+
+.sf-tasks {
+  color: var(--ink);
+}
+
+.sf-tasks-heading h3 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.sf-tasks-heading p {
+  margin: 0 0 24px;
+  color: var(--muted);
+}
+
+.sf-tasks-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.sf-tasks-stats > div {
+  padding: 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.sf-tasks-stats strong {
+  display: block;
+  font-size: 27px;
+  color: var(--ink);
+}
+
+.sf-tasks-stats span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-tasks-form {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) 1fr 1fr auto;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.sf-tasks-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-tasks-form input,
+.sf-tasks-form select,
+.sf-tasks-table select {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  font: inherit;
+}
+
+.sf-tasks-form button {
+  min-height: 42px;
+  padding: 10px 18px;
+  background: #586D60;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sf-tasks-section h4 {
+  margin: 0 0 16px;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.sf-tasks-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.sf-tasks-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.sf-tasks-table th {
+  padding: 14px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+
+.sf-tasks-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.sf-task-title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.sf-task-date {
+  white-space: nowrap;
+}
+
+.sf-priority {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sf-priority-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.sf-task-delete {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.sf-task-delete:hover {
+  color: #A5524D;
+}
+
+.sf-tasks-empty {
+  padding: 28px 16px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--panel);
+  border-radius: 12px;
+}
+
+.sf-tasks-history {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.sf-history-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .sf-tasks-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sf-tasks-stats {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .sf-tasks-stats > div {
+    padding: 12px;
+  }
+
+  .sf-tasks-stats strong {
+    font-size: 22px;
+  }
+
+  .sf-tasks-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* StudyFlow — Calendar */
+
+.sf-study-calendar {
+  color: var(--ink);
+}
+
+.sf-calendar-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.sf-calendar-heading h3 {
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+.sf-calendar-heading p,
+.sf-calendar-activity p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sf-calendar-heading button {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 16px;
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.sf-calendar-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sf-calendar-toolbar h4 {
+  margin: 0;
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.sf-calendar-toolbar button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.sf-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.sf-calendar-weekday {
+  padding: 12px 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.sf-calendar-day {
+  min-width: 0;
+  min-height: 90px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.sf-calendar-day:hover {
+  border-color: #8EA995;
+  background: #E8EEE5;
+  color: #253A33;
+}
+
+.sf-calendar-day.is-today {
+  border-color: #72977C;
+}
+
+.sf-calendar-day.is-selected {
+  background: #E8EEE5;
+  border: 2px solid #68856E;
+  color: #253A33;
+}
+
+.sf-calendar-number {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sf-calendar-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.sf-calendar-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.sf-calendar-minutes {
+  display: block;
+  margin-top: 8px;
+  color: #68856E;
+  font-size: 10px;
+}
+
+.sf-calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 18px 0 30px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-calendar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.sf-calendar-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.sf-calendar-details,
+.sf-calendar-activity {
+  margin-top: 24px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.sf-calendar-details h4,
+.sf-calendar-activity h4 {
+  margin: 0 0 16px;
+  font-size: 17px;
+}
+
+.sf-calendar-study {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sf-calendar-study strong {
+  color: var(--ink);
+}
+
+.sf-calendar-task {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.sf-calendar-task-marker {
+  width: 9px;
+  height: 9px;
+  margin-top: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sf-calendar-task strong,
+.sf-calendar-task small {
+  display: block;
+}
+
+.sf-calendar-task strong {
+  font-size: 14px;
+}
+
+.sf-calendar-task small {
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-calendar-no-tasks {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sf-calendar-activity .extra-calendar {
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .sf-calendar-grid {
+    gap: 3px;
+  }
+
+  .sf-calendar-day {
+    min-height: 64px;
+    padding: 6px;
+    border-radius: 8px;
+  }
+
+  .sf-calendar-number {
+    font-size: 12px;
+  }
+
+  .sf-calendar-minutes {
+    font-size: 9px;
+  }
+
+  .sf-calendar-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sf-calendar-details,
+  .sf-calendar-activity {
+    padding: 15px;
+  }
+}
+
+
+/* StudyFlow — Focus Timer */
+
+.sf-focus {
+  max-width: 620px;
+  margin: 0 auto;
+  color: var(--ink);
+}
+
+.sf-focus-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.sf-focus-heading h3 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.sf-focus-heading p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sf-focus-presets {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sf-focus-presets button {
+  padding: 11px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.sf-focus-presets button.active {
+  background: #E4ECE2;
+  border-color: #68856E;
+  color: #365642;
+  font-weight: 600;
+}
+
+.sf-focus-custom {
+  max-width: 300px;
+  margin: 0 auto 32px;
+}
+
+.sf-focus-custom label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sf-focus-custom > div {
+  display: flex;
+  gap: 8px;
+}
+
+.sf-focus-custom input,
+.sf-focus-details input,
+.sf-focus-details select {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.sf-focus-custom button {
+  padding: 10px 14px;
+  border: 1px solid #68856E;
+  border-radius: 10px;
+  background: #E4ECE2;
+  color: #365642;
+  cursor: pointer;
+}
+
+.sf-focus-ring {
+  width: min(280px, 80vw);
+  aspect-ratio: 1;
+  margin: 0 auto 30px;
+  padding: 13px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sf-focus-ring-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.sf-focus-time {
+  font-size: clamp(38px, 7vw, 54px);
+  font-weight: 700;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.sf-focus-caption {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.sf-focus-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.sf-focus-controls button {
+  padding: 13px 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.sf-focus-controls .sf-focus-primary,
+.sf-focus-save {
+  background: #586D60;
+  border-color: #586D60;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.sf-focus-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.sf-focus-details label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-focus-save {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.sf-focus button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sf-focus-error {
+  color: #A5524D;
+  font-size: 13px;
+}
+
+.sf-focus-success {
+  color: #527D60;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .sf-focus-details {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-focus-controls button {
+    padding: 12px 18px;
+  }
+}
+
+/* StudyFlow — Analytics Dashboard */
+
+.sf-analytics {
+  color: var(--ink);
+}
+
+.sf-analytics-heading {
+  margin-bottom: 26px;
+}
+
+.sf-analytics-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #72977C;
+}
+
+.sf-analytics-heading h2 {
+  margin: 10px 0;
+  font-size: clamp(24px, 4vw, 32px);
+  letter-spacing: -0.7px;
+}
+
+.sf-analytics-heading p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sf-analytics-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.sf-analytics-stat,
+.sf-analytics-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.sf-analytics-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 22px;
+}
+
+.sf-analytics-stat-icon {
+  font-size: 23px;
+  color: #72977C;
+}
+
+.sf-analytics-stat strong {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.sf-analytics-stat > span:not(:first-child) {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sf-analytics-stat small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.sf-analytics-sections {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.sf-analytics-card {
+  min-width: 0;
+  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.sf-analytics-sections .sf-analytics-card {
+  margin-bottom: 0;
+}
+
+.sf-analytics-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.sf-analytics-card-heading h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.sf-analytics-card-heading p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-analytics-tag {
+  background: #E7EEE4;
+  color: #54745D;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 11px;
+}
+
+.sf-analytics-chart {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: 12px;
+  height: 230px;
+}
+
+.sf-analytics-chart-column {
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.sf-analytics-chart-value,
+.sf-analytics-chart-day {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.sf-analytics-chart-track {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.sf-analytics-chart-bar {
+  width: min(100%, 40px);
+  background: #93B19A;
+  border-radius: 8px 8px 0 0;
+  transition: height 0.3s ease;
+}
+
+.sf-analytics-chart-bar:hover {
+  background: #64866C;
+}
+
+.sf-analytics-chart-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sf-analytics-goal-circle {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  margin: 10px auto 22px;
+}
+
+.sf-analytics-goal-circle svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sf-analytics-goal-circle > div {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sf-analytics-goal-circle strong {
+  font-size: 36px;
+}
+
+.sf-analytics-goal-circle span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-analytics-goal-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.sf-analytics-goal-summary span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-analytics-subjects {
+  display: grid;
+  gap: 25px;
+}
+
+.sf-analytics-subject-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.sf-analytics-subject-header > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sf-analytics-subject-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.sf-analytics-subject-track {
+  height: 10px;
+  background: #E5EAE1;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.sf-analytics-subject-track > div {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+.sf-analytics-subject small {
+  display: block;
+  margin-top: 9px;
+  color: var(--muted);
+}
+
+.sf-analytics-empty {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.sf-analytics-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.sf-analytics-footer span {
+  font-size: 24px;
+  color: #72977C;
+}
+
+@media (max-width: 900px) {
+  .sf-analytics-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sf-analytics-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .sf-analytics-stats {
+    gap: 10px;
+  }
+
+  .sf-analytics-stat {
+    padding: 15px;
+  }
+
+  .sf-analytics-stat strong {
+    font-size: 21px;
+  }
+
+  .sf-analytics-card {
+    padding: 16px;
+  }
+
+  .sf-analytics-chart {
+    gap: 5px;
+  }
+
+  .sf-analytics-chart-value {
+    font-size: 9px;
+  }
+}
+
+/* StudyFlow — Smart Recommendations */
+
+.sf-smart {
+  color: var(--ink);
+}
+
+.sf-smart-heading {
+  margin-bottom: 25px;
+}
+
+.sf-smart-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #72977C;
+}
+
+.sf-smart-heading h2 {
+  margin: 10px 0;
+  font-size: clamp(24px, 4vw, 32px);
+}
+
+.sf-smart-heading p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sf-smart-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.sf-smart-summary > div,
+.sf-smart-card {
+  padding: 23px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.sf-smart-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sf-smart-summary strong {
+  font-size: 29px;
+}
+
+.sf-smart-summary span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sf-smart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.sf-smart-card {
+  min-width: 0;
+}
+
+.sf-smart-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.sf-smart-icon {
+  font-size: 25px;
+  color: #72977C;
+}
+
+.sf-smart-category {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: #72977C;
+  font-weight: 700;
+}
+
+.sf-smart-card h3 {
+  margin: 0 0 9px;
+  font-size: 19px;
+}
+
+.sf-smart-card > p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.sf-smart-priorities {
+  display: grid;
+  gap: 22px;
+}
+
+.sf-smart-priority-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.sf-smart-progress {
+  height: 9px;
+  background: #E5EAE1;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.sf-smart-progress span {
+  display: block;
+  height: 100%;
+  background: #72977C;
+  border-radius: 20px;
+}
+
+.sf-smart-priorities small {
+  display: block;
+  margin-top: 7px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.sf-smart-deadlines {
+  display: grid;
+  gap: 14px;
+}
+
+.sf-smart-deadlines > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sf-smart-deadlines strong,
+.sf-smart-deadlines small {
+  display: block;
+}
+
+.sf-smart-deadlines strong {
+  font-size: 13px;
+}
+
+.sf-smart-deadlines small {
+  margin-top: 5px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.sf-smart-upcoming,
+.sf-smart-overdue {
+  font-size: 10px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.sf-smart-upcoming {
+  background: #E7EEE4;
+  color: #527D60;
+}
+
+.sf-smart-overdue {
+  background: #F7E3DF;
+  color: #A5524D;
+}
+
+.sf-smart-plan {
+  display: grid;
+  gap: 16px;
+}
+
+.sf-smart-plan > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sf-smart-plan > div > span {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #E7EEE4;
+  color: #527D60;
+  font-weight: 700;
+}
+
+.sf-smart-plan strong,
+.sf-smart-plan small {
+  display: block;
+}
+
+.sf-smart-plan strong {
+  font-size: 13px;
+}
+
+.sf-smart-plan small {
+  margin-top: 5px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.sf-smart-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 18px;
+  background: #586D60;
+  color: #fff;
+  border-radius: 11px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sf-smart-motivation > p {
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.sf-smart-motivation-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sf-smart-positive {
+  color: #527D60;
+  font-size: 13px;
+}
+
+.sf-smart-footer {
+  margin-top: 25px;
+  padding: 15px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 750px) {
+  .sf-smart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-smart-summary {
+    gap: 9px;
+  }
+
+  .sf-smart-summary > div {
+    padding: 13px;
+  }
+
+  .sf-smart-summary strong {
+    font-size: 23px;
+  }
+
+  .sf-smart-card {
+    padding: 17px;
+  }
+}
+
+
+/* StudyFlow  Mobile Responsive Improvements */
+
+@media (max-width: 760px) {
+  .sf-smart-grid,
+  .sf-smart-summary,
+  .extra-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-smart-summary {
+    gap: 10px;
+  }
+
+  .sf-smart-summary > div {
+    padding: 16px;
+  }
+
+  .sf-smart-heading h2 {
+    font-size: 25px;
+  }
+
+  .sf-smart-card {
+    padding: 18px;
+  }
+
+  .extra-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .extra-task-form {
+    grid-template-columns: 1fr;
+  }
+
+  .extra-task-form input:first-child {
+    grid-column: auto;
+  }
+
+  .sf-smart-deadlines > div {
+    flex-wrap: wrap;
+  }
+
+  .app-main,
+  .extra-panel,
+  .sf-smart-card {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 460px) {
+  .sf-smart-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sf-smart-summary > div {
+    padding: 12px 8px;
+  }
+
+  .sf-smart-summary strong {
+    font-size: 22px;
+  }
+
+  .sf-smart-summary span {
+    font-size: 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .extra-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .extra-actions {
+    flex-wrap: wrap;
+  }
+
+  .extra-actions button {
+    min-height: 44px;
+  }
+
+  .sf-smart-card h3 {
+    font-size: 18px;
+  }
+}
