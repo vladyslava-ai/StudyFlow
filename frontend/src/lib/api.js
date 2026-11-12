@@ -40,6 +40,7 @@ async function request(path, { method = "GET", body } = {}) {
 }
 
 export const api = {
+  aiChat: (message) => request("/api/ai/chat", { method: "POST", body: { message } }),
   listSubjects: () => request("/api/subjects"),
   addSubject: ({ name, goalMinutes }) =>
     request("/api/subjects", { method: "POST", body: { name, goal_minutes: goalMinutes } }),

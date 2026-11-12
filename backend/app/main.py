@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 
 from .database import Base, engine
-from .routers import sessions, stats, subjects, extras
+from .routers import sessions, stats, subjects, extras, ai
 
 DESCRIPTION = """
 REST API трекера навчання. Зберігає предмети й сесії навчання в базі PostgreSQL
@@ -75,6 +75,7 @@ app.include_router(subjects.router)
 app.include_router(sessions.router)
 app.include_router(stats.router)
 app.include_router(extras.router)
+app.include_router(ai.router)
 
 
 @app.get("/api/health", tags=["Службові"], summary="Стан сервера й бази даних")

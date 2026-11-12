@@ -1,0 +1,160 @@
+﻿.ai-assistant {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px;
+  border: 1px solid #dce5d9;
+  border-radius: 24px;
+  background: var(--surface, #ffffff);
+  color: inherit;
+  box-shadow: 0 8px 30px rgba(44, 69, 49, 0.04);
+}
+
+.ai-intro {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.ai-symbol {
+  font-size: 38px;
+  color: #76937b;
+}
+
+.ai-intro h2 {
+  margin: 10px 0;
+  font-size: 26px;
+}
+
+.ai-intro p,
+.ai-empty p,
+.ai-disclaimer {
+  opacity: 0.7;
+}
+
+.ai-conversation {
+  min-height: 350px;
+  max-height: 550px;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(125, 151, 126, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ai-empty {
+  margin: auto;
+  text-align: center;
+}
+
+.ai-empty span {
+  font-size: 44px;
+  color: #78967b;
+}
+
+.ai-message {
+  max-width: 85%;
+  padding: 15px 18px;
+  border-radius: 18px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ai-message.user {
+  align-self: flex-end;
+  background: #dce9da;
+  color: #263b2d;
+}
+
+.ai-message.assistant {
+  align-self: flex-start;
+  background: var(--surface, #ffffff);
+  border: 1px solid #dce5d9;
+}
+
+.ai-message-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+.ai-message-text {
+  line-height: 1.7;
+}
+
+.ai-typing {
+  opacity: 0.65;
+  font-style: italic;
+}
+
+.ai-form {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  align-items: flex-end;
+}
+
+.ai-form textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #b9cbb9;
+  border-radius: 14px;
+  background: var(--surface, #ffffff);
+  color: inherit;
+  font: inherit;
+  resize: vertical;
+}
+
+.ai-form button {
+  padding: 16px 20px;
+  border: 0;
+  border-radius: 14px;
+  background: #64876b;
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ai-form button:hover:not(:disabled) {
+  background: #4f7357;
+}
+
+.ai-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-error {
+  color: #b54848;
+  margin-top: 12px;
+}
+
+.ai-disclaimer {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 14px;
+}
+
+@media (max-width: 600px) {
+  .ai-assistant {
+    padding: 15px;
+  }
+
+  .ai-form {
+    flex-direction: column;
+  }
+
+  .ai-form textarea,
+  .ai-form button {
+    width: 100%;
+  }
+
+  .ai-message {
+    max-width: 95%;
+  }
+}

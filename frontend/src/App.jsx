@@ -4,6 +4,7 @@ import { api } from './lib/api.js';
 
 import AuthGate from './components/AuthGate.jsx';
 import Account from './components/Account.jsx';
+import AIAssistant from './components/AIAssistant.jsx';
 import Tracker from './components/Tracker.jsx';
 import Journal from './components/Journal.jsx';
 import ExtraDashboard from './components/ExtraDashboard.jsx';
@@ -17,6 +18,7 @@ const pages = [
   ['timer', 'Фокус-таймер', '◷'],
   ['analytics', 'Аналітика', '▥'],
   ['tips', 'Рекомендації', '✧'],
+  ['ai', 'AI Assistant', '*'],
   ['account', 'Профіль', '◉'],
 ];
 
@@ -513,7 +515,9 @@ function Workspace({ user, setUser, theme, setTheme }) {
                 </div>
               )}
 
-              {page === 'account' && (
+              {page === 'ai' && <AIAssistant />}
+
+               {page === 'account' && (
                 <Account user={user} setUser={setUser} />
               )}
             </>
